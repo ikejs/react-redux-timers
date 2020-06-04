@@ -1,5 +1,5 @@
 import Timer from '../Timer';
-import { NEW_TIMER, TOGGLE_TIMER } from '../actions';
+import { NEW_TIMER, TOGGLE_TIMER, UPDATE } from '../actions';
 
 const timerReducer = (state = [], action) => {
   switch (action.type) {
@@ -15,6 +15,14 @@ const timerReducer = (state = [], action) => {
         return timer
       })
       return newState
+
+    case UPDATE:
+      return state.map((timer) => {
+        if (timer.isRunning) {
+          timer = { ...timer, time: timer.time += action.payload.deltaTime }
+        }
+        return timer
+      })
 
     default:
       return state;
