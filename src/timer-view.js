@@ -1,22 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatTime } from './utils';
-
-import { toggleTimer } from './actions'
+import { toggleTimer } from './actions';
+import './timer-view.css';
 
 class TimerView extends Component {
+
   constructor(props) {
     super(props)
   }
 
   render() {
 
-  const { index, toggleTimer, timer } = this.props
+  const { index, toggleTimer, timer } = this.props;
+  const buttonClass = timer.isRunning ? "stop" : "start";
+
     return (
-      <div>
-        <h2>{timer.name}</h2>
-        <h1>{formatTime(timer.time)}</h1>
+      <div className='timer-view'>
+        <h2 className='timer-view-name__h2'>{timer.name}</h2>
+        <h1 className='timer-view-time__h1'>{formatTime(timer.time)}</h1>
         <button
+            className={`timer-view__button timer-view__button--${buttonClass}`}
             onClick={(e) => {
                 toggleTimer(index)
             }}>
@@ -25,6 +29,7 @@ class TimerView extends Component {
       </div>
     )
   }
+
 }
 
 const mapStateToProps = (state) => {
